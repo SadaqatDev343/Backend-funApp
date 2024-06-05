@@ -38,8 +38,19 @@ class FirebaseManager {
 
       const response = await connection.messaging().sendEach(payload);
       console.log('res => ', JSON.stringify(response, null, 2));
+
+      // Construct response with body, title, and success message
+      const successResponse = {
+        success: true,
+        title,
+        body,
+        message: 'Notification sent successfully',
+      };
+      return successResponse;
     } catch (error) {
       console.log('sendNotificationToSingle_error', error);
+      // Send error message as response
+      return { success: false, message: 'Failed to send notification' };
     }
   }
 }
